@@ -1,0 +1,107 @@
+
+
+
+/*ai asistent - hlavička*/
+.SimpleSearchView .icon.ai {
+    background-color: #dce3ed;
+}
+
+/*zboží widget*/
+#PneuokZboziWidget {
+    top: 550px !important;
+}
+
+/*skrytí ikon x+y*/
+.xynAction {
+    display: none !important;
+}
+
+.PDXynActionPanel {
+    display: none !important;
+}
+
+.BasketXynActionsList {
+    display: none !important;   
+}
+
+
+.MenuCategoriesRwdView.v1.big ul.root > li {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/*proklik kategorie horního menu*/
+.MenuCategoriesRwdView.v1.big ul.root>li:not(.leaf)>a.name {
+    pointer-events: auto;
+}
+
+.SubscribeToNewsletterView.v1 .button {
+    width: 100%;
+    font-weight: 700;
+}
+
+.ProductView h2 {
+    font-weight: 700;
+}
+
+/*skrytí měny - dočasně, než se udělá v designu*/
+.CurrencyPanel {
+    display: none;
+}
+
+/*cookies*/
+.CookiesConfirmationView.v1 .allowLink {
+    border-color: #057705 !important;
+    background-color: #057705 !important;
+}
+
+.CookiesConfirmationView .settingsLink {
+    background-color: #d5d5d5 !important;
+}
+
+.CookiesConfirmationView.v4 .allowAllLink {
+    border-color: #057705 !important;
+    background-color: #057705 !important;
+}
+
+.CookiesConfirmationView.v4 .allowSelectedLink {
+    background-color: #d5d5d5 !important;
+}
+
+#pneuservis-online-rezervace  {height: 5000px; width: 100%; box-sizing: border-box; }
+
+
+@media(max-width:600px){
+    #pneuservis-online-rezervace  {
+        height: 10000px;
+    }
+}
+
+/* QR kód - Použití při více měnách na 1 e-shopu*/
+OrderMasterView .OrderCreationResultView .userContent .EUR_CZK {
+    display: none;
+}
+.OrderMasterView .OrderCreationResultView .userContent .EUR_czk {
+    display: none;
+}
+
+.OrderMasterView .OrderCreationResultView .userContent .CZK_eur {
+    display: none;
+}
+.OrderMasterView .OrderCreationResultView .userContent .CZK_EUR {
+    display: none;
+}
+
+.ProductsMaster .PneuokConfiguratorTabsView .tablink {display: none;}
+
+@media all and (max-width:743px) {
+
+	.PneuokConfiguratorView.PneuokPneuConfigurator,
+	.PneuokConfiguratorView.PneuokMotoPneuConfigurator,
+	.PneuokConfiguratorView.PneuokPlechDiskyConfigurator,
+	.PneuokConfiguratorView.PneuokQuadPneuConfigurator,
+	.PneuokConfiguratorView.PneuokAluDiskyConfigurator {	background-image: none;	}
+
+}
+
+.SimpleSearchView .query { font-size: 14px;}
