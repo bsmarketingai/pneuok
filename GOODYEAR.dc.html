@@ -106,10 +106,15 @@
 </ul>
 </section>
 </div>
+<div id="PneuokVehicleTabs" role="tablist" style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px 0; font-family: Poppins, sans-serif;">
+<sc-for list="{{ vTabs }}" as="vt" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{ vt.sel }}" onClick="{{ vt.pick }}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; font-family: Poppins, sans-serif; font-size: 15px; font-weight: 600; color: {{ vt.fg }}; background: {{ vt.bg }}; border: 0; border-radius: 7px; cursor: pointer;"><span style="display: block; width: 26px; height: 26px; flex-shrink: 0; background-color: currentColor; -webkit-mask: {{ vt.mask }}; mask: {{ vt.mask }};"></span><span>{{ vt.label }}</span></button>
+</sc-for>
+</div>
 <div id="PneuokSeasonTreads" style="display: grid; grid-template-columns: {{ treadCols }}; gap: 20px; margin: 0 0 28px 0; font-family: Poppins, sans-serif; align-items: start;">
 <sc-for list="{{ seasons }}" as="s" hint-placeholder-count="3">
 <section style="box-sizing: border-box; padding: 22px 24px 18px 24px; background: #f3f7fe; border: 1px solid #e6effd; border-radius: 12px; min-width: 0;">
-<h2 style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 8px 0; padding-bottom: 12px; font-size: 20px; line-height: 1.3; font-weight: 700; color: #0d0e46; border-bottom: 2px solid #dce3ed;"><span style="display: flex; align-items: center; gap: 10px;"><span style="display: block; width: 28px; height: 28px; flex-shrink: 0; background: {{ s.iconBg }};"></span><span>{{ s.title }}</span></span><span style="font-size: 14px; font-weight: 600; color: #546986;">{{ s.count }}</span></h2>
+<h2 style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 8px 0; padding-bottom: 12px; font-size: 20px; line-height: 1.3; font-weight: 700; color: #0d0e46; border-bottom: 2px solid #dce3ed;"><span style="display: flex; align-items: center; gap: 10px;"><sc-if value="{{ s.iconBg }}" hint-placeholder-val="{{ true }}"><span style="display: block; width: 28px; height: 28px; flex-shrink: 0; background: {{ s.iconBg }};"></span></sc-if><span>{{ s.title }}</span></span><span style="font-size: 14px; font-weight: 600; color: #546986;">{{ s.count }}</span></h2>
 <ul style="display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none;">
 <sc-for list="{{ s.items }}" as="t" hint-placeholder-count="10">
 <li style="display: flex; align-items: center; gap: 14px; min-width: 0; padding: 8px 0; border-bottom: 1px solid #e6effd;">
@@ -118,7 +123,7 @@
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1;">
 <a href="#" style="font-size: 14px; line-height: 1.4; font-weight: 600; color: #0a2852; text-decoration: underline; text-underline-offset: 0.2em; overflow-wrap: anywhere;" style-hover="color: #546986;">{{ t.name }}</a>
-<span style="font-size: 14px; line-height: 1.4; color: #0d0e46;">od <strong style="font-weight: 700;">{{ t.price }}</strong></span>
+<sc-if value="{{ t.price }}" hint-placeholder-val="{{ true }}"><span style="font-size: 14px; line-height: 1.4; color: #0d0e46;">od <strong style="font-weight: 700;">{{ t.price }}</strong></span></sc-if>
 </div>
 </li>
 </sc-for>
@@ -128,6 +133,32 @@
 </sc-if>
 </section>
 </sc-for>
+</div>
+<div id="PneuokAwards" style="display: grid; grid-template-columns: {{ treadCols2 }}; gap: 20px; margin: 0 0 28px 0; font-family: Poppins, sans-serif;">
+<section style="box-sizing: border-box; padding: 22px 24px 8px 24px; background: #f3f7fe; border: 1px solid #e6effd; border-radius: 12px; min-width: 0;">
+<h2 style="margin: 0 0 4px 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: #0d0e46;">Oceněno odborníky</h2>
+<p style="margin: 0 0 8px 0; padding-bottom: 12px; font-size: 14px; line-height: 1.5; color: #546986; border-bottom: 2px solid #dce3ed; text-wrap: pretty;">Ocenění za mimořádný výkon a inovace.</p>
+<div style="display: flex; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 1px solid #e6effd;">
+<div style="flex: 0 0 140px; height: 110px; display: flex; align-items: center; justify-content: center;"><img src="uploads/vec4seasg3-adac-2025-en.png" alt="ADAC test 2025 – Goodyear Vector 4Seasons Gen-3" loading="lazy" style="max-width: 100%; max-height: 100%; display: block;"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><h3 style="margin: 0 0 4px 0; font-size: 16px; line-height: 1.3; font-weight: 700; color: #0d0e46;">ADAC</h3><span style="font-size: 14px; line-height: 1.5; color: #0d0e46;">Vítěz testu 2025</span><span style="font-size: 14px; line-height: 1.5; color: #546986;">Dobrá, 1. místo z 16</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; padding: 16px 0;">
+<div style="flex: 0 0 140px; height: 110px; display: flex; align-items: center; justify-content: center;"><img src="uploads/vec4seasg3-auto-zeitung-2024-en.png" alt="Auto Zeitung Best in Test 2024 – Goodyear Vector 4Seasons Gen-3" loading="lazy" style="max-width: 100%; max-height: 100%; display: block;"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><h3 style="margin: 0 0 4px 0; font-size: 16px; line-height: 1.3; font-weight: 700; color: #0d0e46;">Auto Zeitung, číslo 21/2024</h3><span style="font-size: 14px; line-height: 1.5; color: #0d0e46;">Vítěz 2024</span><span style="font-size: 14px; line-height: 1.5; color: #546986;">Nejlepší v testu</span></div>
+</div>
+</section>
+<section style="box-sizing: border-box; padding: 22px 24px 8px 24px; background: #f3f7fe; border: 1px solid #e6effd; border-radius: 12px; min-width: 0;">
+<h2 style="margin: 0 0 4px 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: #0d0e46;">Důvěra řidičů</h2>
+<p style="margin: 0 0 8px 0; padding-bottom: 12px; font-size: 14px; line-height: 1.5; color: #546986; border-bottom: 2px solid #dce3ed; text-wrap: pretty;">Skutečné hodnocení od řidičů, kteří na pneumatiky Goodyear spoléhají každý den.</p>
+<div style="display: flex; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 1px solid #e6effd;">
+<div style="flex: 0 0 140px; height: 110px; display: flex; align-items: center; justify-content: center;"><img src="uploads/vec4seasg3-driver-recommended-all-season-highly-recommended.png" alt="Driver Reviews Customer Choice Awards 2024/25 – Goodyear Vector 4Seasons Gen-3" loading="lazy" style="max-width: 100%; max-height: 100%; display: block;"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><h3 style="margin: 0 0 4px 0; font-size: 16px; line-height: 1.3; font-weight: 700; color: #0d0e46;">Driver Reviews</h3><span style="font-size: 14px; line-height: 1.5; color: #0d0e46;">Vítěz 2024</span><span style="font-size: 14px; line-height: 1.5; color: #546986;">Nejvíce komentovaná</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; padding: 16px 0;">
+<div style="flex: 0 0 140px; height: 110px; display: flex; align-items: center; justify-content: center;"><img src="uploads/vec4seasg3-tyre-reviews-2023-en-testresult.jpg" alt="Tyrereviews 2023 Highly Recommended – Goodyear Vector 4Seasons Gen-3" loading="lazy" style="max-width: 100%; max-height: 100%; display: block;"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><h3 style="margin: 0 0 4px 0; font-size: 16px; line-height: 1.3; font-weight: 700; color: #0d0e46;">Tyrereviews</h3><span style="font-size: 14px; line-height: 1.5; color: #0d0e46;">Vítěz 2023</span><span style="font-size: 14px; line-height: 1.5; color: #546986;">Vysoce doporučená</span></div>
+</div>
+</section>
 </div>
 <h2 id="PneuokAssortmentHeading" style="margin: 12px 0 18px 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 1.25; font-weight: 700; color: #0d0e46; text-wrap: pretty;">Celý sortiment GOODYEAR</h2>
 </div><dc-con><bs-empty></bs-empty><div id="PneuokAttributeTabsFilterDesktop" class="TabsAttributeFilterMasterView CustomMasterTabsBaseView CustomMasterView v1b v1 bsddr3 bs-view dcon dc559 inColumns PneuokAttributeTabsFilterDesktop big">
@@ -844,13 +875,35 @@ class Component extends DCLogic {
       { key: 'letni', title: 'Letní dezény', items: mk('letni', [['Eagle F1 Asymmetric 6','2 209','eagle-f1-asymmetric-6'],['Efficientgrip 2 SUV','2 858','efficientgrip-2-suv'],['Efficientgrip Performance','1 876','efficientgrip-performance'],['Eagle F1 Asymmetric 3','2 187','eagle-f1-asymmetric-3'],['Eagle F1 Asymmetric 5','3 065','eagle-f1-asymmetric-5'],['Eagle F1 Asymmetric 3 SUV','3 268','eagle-f1-asymmetric-3-suv'],['Eagle F1 Supersport','2 940','eagle-f1-supersport'],['Efficientgrip Compact 2','1 980','efficientgrip-compact-2'],['Eagle F1 Asymmetric SUV','3 404','eagle-f1-asymmetric-suv'],['Eagle F1 Asymmetric 2 SUV','3 363','eagle-f1-asymmetric-2-suv'],['Assurance ComfortTred','2 504','assurance-comforttred'],['Wrangler AT Adventure','2 985','wrangler-at-adventure'],['Eagle F1 Asymmetric 2','2 832','eagle-f1-asymmetric-2'],['Eagle F1 Asymmetric SUV AT','3 603','eagle-f1-asymmetric-suv-at'],['Efficientgrip SUV','2 695','efficientgrip-suv'],['Wrangler Territory HT','3 658','wrangler-territory-ht'],['Eagle Sport All Season','4 100','eagle-sport-all-season'],['Wrangler Duratrac RT','4 003','wrangler-duratrac-rt'],['Eagle F1 Asymmetric','3 075','eagle-f1-asymmetric'],['Wrangler Territory AT/S','3 658','wrangler-territory-at-s'],['Efficientgrip Performance SUV','4 486','efficientgrip-performance-suv'],['Eagle F1 Allterrain','4 069','eagle-f1-allterrain'],['Wrangler Duratrac','3 355','wrangler-duratrac'],['Excellence','5 673','excellence'],['Eagle F1 GSD3','2 844','eagle-f1-gsd3'],['Eagle F1 Supersport RS','8 049','eagle-f1-supersport-rs'],['Eagle F1 Asymmetric 5 SUV','4 253','eagle-f1-asymmetric-5-suv'],['Eagle F1 Asymmetric 6 SUV','6 052','eagle-f1-asymmetric-6-suv'],['Efficientgrip','3 591','efficientgrip'],['Eagle F1 Supersport R','5 392','eagle-f1-supersport-r'],['Eagle Touring','4 415','eagle-touring'],['Eagle NCT5','63 292','eagle-nct5'],['Eagle LS2 SUV','4 882','eagle-ls2-suv'],['Eagle F1 Supersport SUV','7 722',null],['Eagle Sport All Season SUV','4 574','eagle-sport-all-season-suv'],['Wrangler HP ALL WEATHER','4 217','wrangler-hp-all-weather'],['Duragrip','2 259','duragrip'],['Efficientgrip Compact','1 431','efficientgrip-compact'],['Eagle F1 Supercar 3R','13 584','eagle-f1-supercar-3r'],['Eagle Sport 2 UHP','3 205','eagle-sport-2-uhp']]) },
       { key: 'celorocni', title: 'Celoroční dezény', items: mk('celorocni', [['Vector 4Seasons Gen-3','1 780','vector-4seasons-gen-3'],['Vector 4Seasons Gen-2','1 746','vector-4seasons-gen-2'],['Vector 4Seasons Gen-3 SUV','3 017','vector-4seasons-gen-3-suv'],['Vector All Season 4','2 271','vector-all-season-4'],['Vector 4Seasons','2 035','vector-4seasons'],['Vector 4Seasons SUV Gen-2','3 355','vector-4seasons-suv-gen-2'],['Vector 4Seasons SUV','3 374','vector-4seasons-suv'],['Wrangler AT Adventure +','3 856','wrangler-at-adventure-plus']]) }
     ];
+    const isJeep = it => /SUV|Wrangler|Allterrain/.test(it.name);
+    const plain = (rows) => rows.map(n => ({ name: 'Goodyear ' + n, price: null, img: null }));
+    const byVeh = {
+      osobni: data.map(d => ({ ...d, items: d.items.filter(it => !isJeep(it)) })),
+      jeep: data.map(d => ({ ...d, items: d.items.filter(isJeep) })),
+      dodavkove: [
+        { key: 'zimni', title: 'Zimní dezény', items: plain(['UltraGrip Cargo', 'UltraGrip Cargo 2', 'UltraGrip Performance Cargo']) },
+        { key: 'letni', title: 'Letní dezény', items: plain(['Efficientgrip Cargo 2', 'Efficientgrip Cargo', 'Cargo Marathon 2', 'Duramax G2']) },
+        { key: 'celorocni', title: 'Celoroční dezény', items: plain(['Vector 4Seasons Cargo', 'Cargo Vector 2']) }
+      ],
+      nakladni: [
+        { key: 'vodici', title: 'Vodící', noIcon: true, items: plain(['KMAX S Gen-2', 'FUELMAX S Gen-2', 'Omnitrac S', 'Marathon Coach']) },
+        { key: 'zaberove', title: 'Záběrové', noIcon: true, items: plain(['KMAX D Gen-2', 'FUELMAX D Gen-2', 'Omnitrac D', 'UltraGrip Max D']) },
+        { key: 'navesy', title: 'Návěsy', noIcon: true, items: plain(['KMAX T Gen-2', 'FUELMAX T', 'Omnitrac T', 'UltraGrip Max T']) },
+        { key: 'smisene', title: 'Smíšené', noIcon: true, items: plain(['Omnitrac MSS II', 'Omnitrac MSD II', 'Offroad ORD']) }
+      ]
+    };
+    const VEH = [['osobni', 'Osobní'], ['dodavkove', 'Dodávkové'], ['jeep', 'Jeep'], ['nakladni', 'Nákladní']];
+    const veh = this.state.veh || 'osobni';
+    const vTabs = VEH.map(([k, label]) => ({ label, sel: veh === k, fg: veh === k ? '#ffffff' : '#0a2852', bg: veh === k ? '#0a2852' : '#e5eeff', mask: 'url(uploads/pneuok-' + k + '.svg) center / contain no-repeat', pick: () => this.setState({ veh: k }) }));
     const LIMIT = 10, all = this.state.seasonAll || {};
-    const seasons = data.map(d => ({
-      title: d.title, iconBg: 'url(kit/images/ui-ikony/icon_' + d.key + '.svg) center / contain no-repeat', count: '(' + d.items.length + ')',
+    const cur = byVeh[veh];
+    const seasons = cur.map(d => ({
+      title: d.title, iconBg: d.noIcon ? null : 'url(kit/images/ui-ikony/icon_' + d.key + '.svg) center / contain no-repeat', count: '(' + d.items.length + ')',
       items: all[d.key] ? d.items : d.items.slice(0, LIMIT),
       hasMore: d.items.length > LIMIT,
       toggleLabel: all[d.key] ? 'Zobrazit méně' : 'Zobrazit všech ' + d.items.length,
-      toggle: () => this.setState(s => ({ seasonAll: { ...(s.seasonAll || {}), [d.key]: !(s.seasonAll || {})[d.key] } }))
+      toggle: () => this.setState(s => ({ seasonAll: { ...(s.seasonAll || {}), [d.key]: !(s.seasonAll || {})[d.key] } })),
+      _k: veh + d.key
     }));
     const fo = this.state.fOpen || {}, fm = this.state.fMore || {};
     const vals = arr => arr.map(x => ({ label: x[0], count: x[1] }));
@@ -881,10 +934,10 @@ class Component extends DCLogic {
     const fWidths = []; for (let x = 135; x <= 335; x += 10) fWidths.push(String(x));
     return {
       fTop, fSections, fWidths,
-      seasons,
+      seasons, vTabs,
       cfgCols: this.state.cfgRow ? 'minmax(0, 2fr) minmax(0, 1fr)' : 'minmax(0, 1fr)',
       treadCols2: this.state.wide ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)',
-      treadCols: this.state.wide ? 'repeat(3, minmax(0, 1fr))' : 'minmax(0, 1fr)',
+      treadCols: this.state.wide ? (cur.length > 3 ? 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))' : 'repeat(3, minmax(0, 1fr))') : 'minmax(0, 1fr)',
       listFlow: this.state.oneCol ? 'row' : 'column',
       topRows: this.state.oneCol ? 'none' : 'repeat(5, auto)',
       newRows: this.state.oneCol ? 'none' : 'repeat(3, auto)',
