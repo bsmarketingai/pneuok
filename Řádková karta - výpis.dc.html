@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<style>html,body{margin:0;background:#eef2f6}a{color:#0a2852}a:hover{color:#0d0e46}</style>
+</helmet>
+<div style="padding: 48px; font-family: Poppins, sans-serif; color: #0a2852; display: flex; flex-direction: column; gap: 40px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #0d0e46;">Řádková karta produktu – výpis</h1>
+    <p style="margin: 0; font-size: 14px; color: #546986;">Komponenta RadkovaKarta se přepíná podle šířky výpisu. Popup skladovosti se otevře najetím na skladovost (na dotyku klepnutím).</p>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 48px;">
+    <sc-for list="{{ frames }}" as="f" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; align-items: baseline; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 700; color: #0d0e46;">{{ f.title }}</span>
+          <span style="font-size: 13px; color: #546986;">{{ f.sub }}</span>
+        </div>
+        <div style="width: {{ f.w }}; box-sizing: border-box; padding: 0 20px 8px 20px; background: #ffffff; border-radius: 12px;">
+          <sc-for list="{{ products }}" as="pr" hint-placeholder-count="4">
+            <dc-import name="RadkovaKarta" product="{{ pr }}" hint-size="100%,150px"></dc-import>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-size: 15px; font-weight: 700; color: #0d0e46;">Popup skladovosti</span>
+        <span style="font-size: 13px; color: #546986;">otevřený stav</span>
+      </div>
+      <div style="width: 1000px; box-sizing: border-box; padding: 0 20px 300px 20px; background: #ffffff; border-radius: 12px;">
+        <dc-import name="RadkovaKarta" product="{{ first }}" popup-open="{{ true }}" hint-size="100%,150px"></dc-import>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const img1 = 'kit/images/produkty/goodyear-ultragrip-performance-3-215-55-r17-98v-xl-zimni.jpg';
+    const img2 = 'kit/images/produkty/goodyear-ultragrip-performance-suv-255-65-r18-115h-xl-zimni.jpg';
+    const note = 'při objednávce do 14:00 hodin, osobní odběr po potvrzení';
+    const eu = 'obvyklé dodání od 5 do 10 prac. dní, osobní odběr po potvrzení';
+    const rows = (a, b, c) => [{ name: 'Skladem', qty: a, note }, { name: 'Skladem dodavatel CZ', qty: b, note }, { name: 'Skladem dodavatel EU', qty: c, note: eu }];
+    const mk = (brand, size, code, ean, price, priceVat, st, img, guarantee) => ({
+      brand, size, title: brand + ' ' + size, code, ean, price: price + ' Kč', priceVat: priceVat + ' Kč',
+      stock: 'Skladem ' + st[0] + ' ks', stockRows: rows(...st), img, url: '#', guarantee
+    });
+    const products = [
+      mk('BARUM Polaris 6', '195/65 R15 91T Zimní', '15414750000', '4024063006638', '1 025', '1 240', ['> 20', '> 20', '20'], img1, false),
+      mk('BARUM Polaris 6', '205/55 R16 91T Zimní', '15414850000', '4024063006706', '1 202', '1 454', ['> 20', '> 20', '> 20'], img1, false),
+      mk('BARUM Polaris 6', '205/55 R16 91H Zimní', '15414860000', '4024063006690', '1 283', '1 552', ['> 20', '> 20', '20'], img1, false),
+      mk('COOPER WINTER', '215/55 R17 98V XL Zimní', '728362CO', '4038526527455', '2 324', '2 812', ['> 20', '> 20', '4'], img2, true)
+    ];
+    return {
+      products, first: products[0],
+      frames: [
+        { title: 'Desktop', sub: 'výpis 1000 px', w: '1040px' },
+        { title: 'Desktop menší', sub: 'výpis 840 px', w: '880px' },
+        { title: 'Tablet', sub: 'výpis 565 px', w: '605px' },
+        { title: 'Mobil široký', sub: 'výpis 510 px', w: '550px' },
+        { title: 'Mobil', sub: 'výpis 355 px', w: '395px' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+</helmet>
+<div ref="{{ rootRef }}" data-name="ProductRow" style="display: grid; grid-template-columns: {{ cols }}; grid-template-areas: {{ areas }}; grid-template-rows: {{ rows }}; column-gap: {{ colGap }}; align-items: start; padding: 20px 0 22px 0; border-bottom: 1px solid #e3ecf1; font-family: Poppins, sans-serif; color: #0a2852; box-sizing: border-box; width: 100%;">
+  <a href="{{ p.url }}" style="grid-area: img; display: flex; padding-top: {{ imgTop }};">
+    <img src="{{ p.img }}" alt="{{ p.title }}" style="width: 60px; height: 60px; object-fit: contain; display: block;">
+  </a>
+  <div style="grid-area: info; display: flex; flex-direction: column; gap: 8px; min-width: 0;">
+    <h3 style="margin: 0; font-size: 17px; line-height: 1.45; font-weight: 400; color: #0a2852; text-wrap: pretty;">
+      <a href="{{ p.url }}" style="color: inherit; text-decoration: none;" style-hover="text-decoration: underline;"><b style="font-weight: 700; margin-right: 8px;">{{ p.brand }}</b>{{ p.size }}</a>
+    </h3>
+    <dc-import name="Skladovost" variant="row" label="{{ p.stock }}" rows="{{ p.stockRows }}" wrap="{{ availWrap }}" force-open="{{ popupOpen }}" hint-size="100%,24px"></dc-import>
+    <div style="display: flex; flex-direction: {{ codesDir }}; column-gap: 64px; row-gap: 2px; font-size: 13px; line-height: 1.4; color: #0a2852;">
+      <span><b style="font-weight: 700;">Kód:</b> {{ p.code }}</span>
+      <span><b style="font-weight: 700;">EAN:</b> {{ p.ean }}</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 34px; margin-top: {{ iconsTop }};">
+      <div title="EU štítek" style="display: flex; align-items: flex-end; gap: 3px; height: 26px;">
+        <img src="https://www.pneuok.cz/configuration/1325-pneuok/css/img/icon-fuelSave.svg" alt="" style="width: 18px; height: 22px; object-fit: contain;">
+        <div style="display: flex; flex-direction: column; gap: 1px;">
+          <span style="display: block; width: 10px; height: 4px; background: #00a651;"></span>
+          <span style="display: block; width: 13px; height: 4px; background: #8dc63f;"></span>
+          <span style="display: block; width: 17px; height: 4px; background: #fff200;"></span>
+          <span style="display: block; width: 20px; height: 4px; background: #f7941d;"></span>
+          <span style="display: block; width: 24px; height: 4px; background: #ed1c24;"></span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span title="Osobní" style="display: block; width: 26px; height: 24px; background: url(kit/images/ui-ikony/icon_osobni.svg) center / contain no-repeat;"></span>
+        <span title="Zimní" style="display: block; width: 23px; height: 23px; background: url(kit/images/ui-ikony/icon_zimni.svg) center / contain no-repeat;"></span>
+        <sc-if value="{{ p.guarantee }}" hint-placeholder-val="{{ false }}">
+          <a href="https://www.pneuok.cz/data/user-content/garance/Premio%20Garance%202026.pdf" title="rozšířená garance na pneumatiky" style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(0deg, #ab1f00 0%, #fd5900 100%); color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; line-height: 1;">G</a>
+        </sc-if>
+      </div>
+      <a role="button" tabindex="0" title="Porovnat" style="display: block; width: 22px; height: 22px; cursor: pointer; background: url(kit/images/ui-ikony/ProductActionPanelView_compare.svg) center / contain no-repeat;" style-hover="opacity: 0.7;"></a>
+    </div>
+  </div>
+  <div style="grid-area: price; display: flex; flex-direction: column; justify-content: center; align-items: {{ priceAlign }}; min-height: 48px; margin-top: {{ priceTop }}; white-space: nowrap;">
+    <span style="font-size: 17px; line-height: 1.35; font-weight: 800; color: #0d0e46;">{{ p.price }}</span>
+    <span style="font-size: 14px; line-height: 1.5; font-weight: 400; color: #0a2852;">{{ p.priceVat }} s DPH</span>
+  </div>
+  <div style="grid-area: cart; display: flex; align-items: center; gap: 6px; margin-top: {{ cartTop }}; justify-self: {{ cartJustify }};">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; height: 48px; width: 114px; padding: 0 5px; box-sizing: border-box; border-radius: 7px; background: #e5eeff;">
+      <button type="button" aria-label="Snížit množství produktu" onClick="{{ dec }}" style="width: 28px; height: 28px; padding: 0; border: 0; border-radius: 5px; background: #ffffff; color: #0d0e46; font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600; line-height: 1; cursor: pointer;" style-hover="background: #f8ce43;">-</button>
+      <span style="font-size: 15px; font-weight: 500; color: #0d0e46; white-space: nowrap;">{{ qtyLabel }}</span>
+      <button type="button" aria-label="Zvýšit množství produktu" onClick="{{ inc }}" style="width: 28px; height: 28px; padding: 0; border: 0; border-radius: 5px; background: #ffffff; color: #0d0e46; font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600; line-height: 1; cursor: pointer;" style-hover="background: #f8ce43;">+</button>
+    </div>
+    <a role="button" tabindex="0" aria-label="Koupit" style="display: block; width: 48px; height: 48px; border-radius: 7px; cursor: pointer; background: #f8ce43 url(https://www.pneuok.cz/configuration/1325-pneuok/css/img/AddToCartView_button_buy.svg) center / 26px no-repeat;" style-hover="background-color: #ffb800;"></a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;1000px&quot;,&quot;height&quot;:&quot;200px&quot;},&quot;product&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{brand,size,title,code,ean,price,priceVat,stock,stockRows?,img,url,guarantee}&quot;},&quot;popupOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { mode: 'A', qty: 0 };
+  rootRef = React.createRef();
+  componentDidMount() {
+    this.ro = new ResizeObserver(e => {
+      const w = e[0].contentRect.width;
+      const m = w >= 960 ? 'A' : w >= 760 ? 'B' : w >= 540 ? 'C' : w >= 430 ? 'D' : 'E';
+      if (m !== this.state.mode) this.setState({ mode: m });
+    });
+    if (this.rootRef.current) this.ro.observe(this.rootRef.current);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const m = this.state.mode;
+    const p = this.props.product || {
+      brand: 'BARUM Polaris 6', size: '195/65 R15 91T Zimní', title: 'BARUM Polaris 6 195/65 R15 91T Zimní',
+      code: '15414750000', ean: '4024063006638', price: '1 025 Kč', priceVat: '1 240 Kč',
+      stock: 'Skladem > 20 ks', img: 'kit/images/produkty/goodyear-ultragrip-performance-3-215-55-r17-98v-xl-zimni.jpg', url: '#', guarantee: false
+    };
+    const L = {
+      A: { cols: '114px minmax(0, 1fr) auto auto', areas: '"img info price cart"', rows: 'auto', colGap: '28px', priceTop: '34px', cartTop: '34px', priceAlign: 'flex-end', imgTop: '14px', codesDir: 'row', availWrap: false, iconsTop: '4px', cartJustify: 'start' },
+      B: { cols: '114px minmax(0, 1fr) auto auto', areas: '"img info price cart"', rows: 'auto', colGap: '28px', priceTop: '34px', cartTop: '34px', priceAlign: 'flex-end', imgTop: '34px', codesDir: 'row', availWrap: true, iconsTop: '18px', cartJustify: 'start' },
+      C: { cols: '114px minmax(0, 1fr) auto', areas: '"img info price" "img info cart"', rows: 'auto 1fr', colGap: '24px', priceTop: '50px', cartTop: '6px', priceAlign: 'flex-end', imgTop: '56px', codesDir: 'column', availWrap: true, iconsTop: '4px', cartJustify: 'end' },
+      D: { cols: '76px minmax(0, 1fr) auto', areas: '"img info info" ". price cart"', rows: 'auto auto', colGap: '16px', priceTop: '16px', cartTop: '16px', priceAlign: 'flex-start', imgTop: '0px', codesDir: 'row', availWrap: true, iconsTop: '8px', cartJustify: 'end' },
+      E: { cols: '76px minmax(0, 1fr)', areas: '"img info" ". price" ". cart"', rows: 'auto auto auto', colGap: '16px', priceTop: '10px', cartTop: '18px', priceAlign: 'flex-start', imgTop: '0px', codesDir: 'row', availWrap: true, iconsTop: '4px', cartJustify: 'start' }
+    }[m];
+    return {
+      ...L, p,
+      rootRef: this.rootRef,
+      popupOpen: !!this.props.popupOpen,
+      qtyLabel: this.state.qty + ' ks',
+      inc: () => this.setState(s => ({ qty: s.qty + 1 })),
+      dec: () => this.setState(s => ({ qty: Math.max(0, s.qty - 1) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
