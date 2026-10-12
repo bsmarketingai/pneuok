@@ -109,16 +109,47 @@ Mám 2 rozměry
 <sc-for list="{{ pairs }}" as="pr" hint-placeholder-count="3">
 <div style="display: flex; flex-direction: column; padding: 4px 20px 0 20px; background: #ffffff; border: 1px solid #e6effd; border-radius: 18px; box-shadow: 0 17px 44px 0 rgba(191,211,225,.45);">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0 0 0; font-size: 13px; font-weight: 700; color: #0a2852;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0a2852; color: #ffffff; font-size: 12px;">1</span><span>Přední náprava</span><span style="font-weight: 400;">{{ pr.frontSize }}</span></div>
-<dc-import name="RadkovaKarta" product="{{ pr.front }}" hint-size="100%,140px"></dc-import>
+<dc-import name="RadkovaKarta" product="{{ pr.front }}" qty="{{ pr.qf }}" on-qty-change="{{ pr.onQf }}" hint-size="100%,140px"></dc-import>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0 0 0; font-size: 13px; font-weight: 700; color: #0a2852;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0a2852; color: #ffffff; font-size: 12px;">2</span><span>Zadní náprava</span><span style="font-weight: 400;">{{ pr.rearSize }}</span></div>
-<div style="margin-bottom: -1px;"><dc-import name="RadkovaKarta" product="{{ pr.rear }}" hint-size="100%,140px"></dc-import></div>
+<div style="margin-bottom: -1px;"><dc-import name="RadkovaKarta" product="{{ pr.rear }}" qty="{{ pr.qr }}" on-qty-change="{{ pr.onQr }}" hint-size="100%,140px"></dc-import></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin: 0 -20px; padding: 16px 20px; background: #f3f7fe; border-top: 1px solid #e3ecf1; border-radius: 0 0 18px 18px;">
+<span style="font-size: 14px; font-weight: 700; color: #0a2852;">{{ pr.totalLabel }}</span>
+<div style="display: flex; flex-direction: column; align-items: flex-end;">
+<span style="font-size: 20px; line-height: 1.3; font-weight: 800; color: #0d0e46;">{{ pr.totalVat }} s DPH</span>
+<span style="font-size: 14px; line-height: 1.5; color: #0a2852;">{{ pr.total }} bez DPH</span>
+</div>
+</div>
 </div>
 </sc-for>
 </sc-if>
 <sc-if value="{{ oneSize }}" hint-placeholder-val="{{ false }}">
-<div style="display: flex; flex-direction: column; margin-top: 16px; border-top: 1px solid #e3ecf1;">
-<sc-for list="{{ singles }}" as="sp" hint-placeholder-count="3">
-<dc-import name="RadkovaKarta" product="{{ sp }}" hint-size="100%,140px"></dc-import>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 16px; margin-top: 16px;">
+<sc-for list="{{ singles }}" as="sp" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 16px; box-sizing: border-box; background: #ffffff; border: 1px solid #e6effd; border-radius: 12px; box-shadow: 0 17px 44px 0 rgba(191,211,225,.45); color: #0a2852;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px;">
+<div style="display: flex; align-items: center; gap: 6px;">
+<span title="Osobní" style="display: block; width: 26px; height: 24px; background: url(kit/images/ui-ikony/icon_osobni.svg) center / contain no-repeat;"></span>
+<span title="Zimní" style="display: block; width: 23px; height: 23px; background: url(kit/images/ui-ikony/icon_zimni.svg) center / contain no-repeat;"></span>
+</div>
+<sc-if value="{{ sp.guarantee }}" hint-placeholder-val="{{ false }}"><a href="#" title="rozšířená garance na pneumatiky" style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(0deg, #ab1f00 0%, #fd5900 100%); color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; line-height: 1;">G</a></sc-if>
+</div>
+<a href="{{ sp.url }}" style="display: flex; justify-content: center;"><img src="{{ sp.img }}" alt="{{ sp.title }}" style="display: block; width: 100%; max-width: 170px; height: 170px; object-fit: contain;"></a>
+<h3 style="margin: 0; font-size: 15px; line-height: 1.45; font-weight: 400; text-wrap: pretty;"><a href="{{ sp.url }}" style="color: inherit; text-decoration: none;" style-hover="text-decoration: underline;"><b style="display: block; font-weight: 700;">{{ sp.brand }}</b>{{ sp.size }}</a></h3>
+<dc-import name="Skladovost" variant="grid" tone="green" label="{{ sp.stock }}" hint-size="140px,22px"></dc-import>
+<span style="font-size: 12px; color: #0a2852;"><b style="font-weight: 700;">Kód:</b> {{ sp.code }}</span>
+<div style="display: flex; flex-direction: column; margin-top: auto; padding-top: 6px;">
+<span style="font-size: 20px; line-height: 1.3; font-weight: 800; color: #0d0e46;">{{ sp.priceVat }}</span>
+<span style="font-size: 13px; line-height: 1.5;">{{ sp.price }} bez DPH</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px;">
+<div style="display: flex; flex: 1 1 auto; align-items: center; justify-content: space-between; gap: 6px; height: 44px; padding: 0 5px; box-sizing: border-box; border-radius: 7px; background: #e5eeff;">
+<button type="button" aria-label="Snížit množství produktu" onClick="{{ sp.dec }}" style="width: 28px; height: 28px; padding: 0; border: 0; border-radius: 5px; background: #ffffff; color: #0d0e46; font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600; line-height: 1; cursor: pointer;" style-hover="background: #f8ce43;">-</button>
+<span style="font-size: 15px; font-weight: 500; color: #0d0e46; white-space: nowrap;">{{ sp.qtyLabel }}</span>
+<button type="button" aria-label="Zvýšit množství produktu" onClick="{{ sp.inc }}" style="width: 28px; height: 28px; padding: 0; border: 0; border-radius: 5px; background: #ffffff; color: #0d0e46; font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600; line-height: 1; cursor: pointer;" style-hover="background: #f8ce43;">+</button>
+</div>
+<a role="button" tabindex="0" aria-label="Koupit" style="display: block; flex: 0 0 44px; width: 44px; height: 44px; border-radius: 7px; cursor: pointer; background: #f8ce43 url(https://www.pneuok.cz/configuration/1325-pneuok/css/img/AddToCartView_button_buy.svg) center / 24px no-repeat;" style-hover="background-color: #ffb800;"></a>
+</div>
+</div>
 </sc-for>
 </div>
 </sc-if>
@@ -970,8 +1001,17 @@ class Component extends DCLogic {
     const fmt = n => n.toLocaleString('cs-CZ').replace(/\s/g, ' ') + ' Kč';
     const mk = (m, size, pr, st, k) => ({ brand: m.brand, size: size + ' ' + m.li + ' ' + season, title: m.brand + ' ' + size, code: String(589860 + k) + 'GY', ean: '54520' + String(10000000 + k * 7919).slice(0, 8), price: fmt(pr[0]), priceVat: fmt(pr[1]), stock: st, img: m.img, url: '#', guarantee: m.g });
     const pl = (n, a, b, c) => n + ' ' + (n === 1 ? a : n >= 2 && n <= 4 ? b : c);
-    const pairs = models.map((m, i) => ({ frontSize: front, rearSize: rear, front: mk(m, front, m.p, m.stock, i * 2), rear: mk(m, rear, m.r, m.rs, i * 2 + 1) }));
-    const singles = models.map((m, i) => mk(m, front, m.p, m.stock, i * 2));
+    const Q = this.state.qty || {};
+    const setQ = k => n => this.setState(s => ({ qty: { ...(s.qty || {}), [k]: n } }));
+    const pairs = models.map((m, i) => {
+      const qf = Q['f' + i] || 0, qr = Q['r' + i] || 0, none = !qf && !qr;
+      const a = none ? 1 : qf, b = none ? 1 : qr;
+      return { frontSize: front, rearSize: rear, front: mk(m, front, m.p, m.stock, i * 2), rear: mk(m, rear, m.r, m.rs, i * 2 + 1),
+        qf, qr, onQf: setQ('f' + i), onQr: setQ('r' + i),
+        totalLabel: none ? 'Cena za pár (1 ks + 1 ks)' : 'Celkem za sadu (' + qf + ' ks + ' + qr + ' ks)',
+        total: fmt(a * m.p[0] + b * m.r[0]), totalVat: fmt(a * m.p[1] + b * m.r[1]) };
+    });
+    const singles = models.map((m, i) => { const q = Q['s' + i] || 0, set = setQ('s' + i); return { ...mk(m, front, m.p, m.stock, i * 2), qtyLabel: q + ' ks', inc: () => set(q + 1), dec: () => set(Math.max(0, q - 1)) }; });
     return { showResults: true, pairs, singles, resultsSummary: this.state.twoSizes ? 'Přední ' + front + ' · Zadní ' + rear + ' · ' + pl(pairs.length, 'sada', 'sady', 'sad') : front + ' · ' + pl(singles.length, 'produkt', 'produkty', 'produktů') };
   }
   renderVals() {

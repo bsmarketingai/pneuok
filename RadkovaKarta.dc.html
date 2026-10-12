@@ -70,6 +70,7 @@ class Component extends DCLogic {
     });
     if (this.rootRef.current) this.ro.observe(this.rootRef.current);
   }
+  setQty(n) { this.setState({ qty: n }); this.props.onQtyChange && this.props.onQtyChange(n); }
   componentWillUnmount() { this.ro && this.ro.disconnect(); }
   renderVals() {
     const m = this.state.mode;
@@ -89,9 +90,9 @@ class Component extends DCLogic {
       ...L, p,
       rootRef: this.rootRef,
       popupOpen: !!this.props.popupOpen,
-      qtyLabel: this.state.qty + ' ks',
-      inc: () => this.setState(s => ({ qty: s.qty + 1 })),
-      dec: () => this.setState(s => ({ qty: Math.max(0, s.qty - 1) }))
+      qtyLabel: (this.props.qty ?? this.state.qty) + ' ks',
+      inc: () => this.setQty((this.props.qty ?? this.state.qty) + 1),
+      dec: () => this.setQty(Math.max(0, (this.props.qty ?? this.state.qty) - 1))
     };
   }
 }
