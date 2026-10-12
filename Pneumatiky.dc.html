@@ -60,6 +60,21 @@
 Mám 2 rozměry
 </label>
 </div>
+<sc-if value="{{ showCommon }}" hint-placeholder-val="{{ false }}">
+<div style="margin: 0 0 16px 0; padding-bottom: 14px; border-bottom: 1px dashed #dadbe7;">
+<div style="display: flex; align-items: center; gap: 8px; margin: 0 0 8px 2px; font-size: 13px; font-weight: 700; color: #0a2852;">Společné parametry</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 14px;">
+<sc-for list="{{ commonFields }}" as="cf" hint-placeholder-count="2">
+<label style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+<span style="margin-left: 2px; font-size: 12px; color: #0d0e46;">{{ cf.label }}</span>
+<select value="{{ cf.value }}" onChange="{{ cf.onChange }}" style="width: 100%; height: 40px; box-sizing: border-box; padding: 0 44px 0 10px; font-family: Poppins, sans-serif; font-size: 14px; color: #0d0e46; background-color: #ffffff; background-image: url('https://www.pneuok.cz/configuration/1325-pneuok/css/img/select-arrow.svg'); background-repeat: no-repeat; background-position: center right 10px; border: 1px solid #dadbe7; border-radius: 5px; appearance: none; cursor: pointer;" style-hover="border-color: #0a2852;">
+<sc-for list="{{ cf.options }}" as="opt" hint-placeholder-count="3"><option value="{{ opt }}">{{ opt }}</option></sc-for>
+</select>
+</label>
+</sc-for>
+</div>
+</div>
+</sc-if>
 <sc-if value="{{ twoSizes }}" hint-placeholder-val="{{ false }}"><div style="display: flex; align-items: center; gap: 8px; margin: 0 0 8px 2px; font-size: 13px; font-weight: 700; color: #0a2852;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0a2852; color: #ffffff; font-size: 12px;">1</span>Přední náprava</div></sc-if>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 14px;">
 <sc-for list="{{ fields }}" as="fld" hint-placeholder-count="5">
@@ -99,6 +114,21 @@ Mám 2 rozměry
 </div>
 </sc-if>
 </div>
+<div data-name="PrezentacniPanel" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; width: 260px; max-width: calc(100vw - 40px); padding: 14px 16px; box-sizing: border-box; background: #0a2852; color: #ffffff; border-radius: 12px; box-shadow: 0 12px 32px rgba(10,40,82,.35); font-family: Poppins, sans-serif;">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #f8ce43;">Prezentace – varianty</span>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<span style="font-size: 14px; line-height: 1.35;">Konfigurátor</span>
+<div role="radiogroup" style="display: flex; gap: 4px; padding: 3px; background: #546986; border-radius: 8px;">
+<sc-for list="{{ cfgVersions }}" as="cv" hint-placeholder-count="2">
+<a role="radio" tabindex="0" aria-checked="{{ cv.sel }}" onClick="{{ cv.pick }}" style="display: flex; flex: 1 1 0; align-items: center; justify-content: center; min-height: 30px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; color: {{ cv.color }}; background: {{ cv.bg }};">{{ cv.label }}</a>
+</sc-for>
+</div>
+</div>
+<a role="switch" tabindex="0" aria-checked="{{ showTotal }}" onClick="{{ toggleTotal }}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; cursor: pointer; color: #ffffff; text-decoration: none;">
+<span style="font-size: 14px; line-height: 1.35;">Celková cena za pár / sadu</span>
+<span style="position: relative; flex: 0 0 44px; width: 44px; height: 24px; border-radius: 12px; background: {{ totalSwBg }}; transition: background .2s;"><span style="position: absolute; top: 3px; left: {{ totalKnob }}; width: 18px; height: 18px; border-radius: 50%; background: #ffffff; transition: left .2s;"></span></span>
+</a>
+</div>
 <sc-if value="{{ showResults }}" hint-placeholder-val="{{ false }}">
 <div id="PneuokAxleResults" style="display: flex; flex-direction: column; gap: 40px; margin: 0 0 32px 0; font-family: Poppins, sans-serif;">
 <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: -16px;">
@@ -112,13 +142,13 @@ Mám 2 rozměry
 <dc-import name="RadkovaKarta" product="{{ pr.front }}" qty="{{ pr.qf }}" on-qty-change="{{ pr.onQf }}" hint-size="100%,140px"></dc-import>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0 0 0; font-size: 13px; font-weight: 700; color: #0a2852;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0a2852; color: #ffffff; font-size: 12px;">2</span><span>Zadní náprava</span><span style="font-weight: 400;">{{ pr.rearSize }}</span></div>
 <div style="margin-bottom: -1px;"><dc-import name="RadkovaKarta" product="{{ pr.rear }}" qty="{{ pr.qr }}" on-qty-change="{{ pr.onQr }}" hint-size="100%,140px"></dc-import></div>
-<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin: 0 -20px; padding: 16px 20px; background: #f3f7fe; border-top: 1px solid #e3ecf1; border-radius: 0 0 18px 18px;">
+<sc-if value="{{ showTotal }}" hint-placeholder-val="{{ true }}"><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin: 0 -20px; padding: 16px 20px; background: #f3f7fe; border-top: 1px solid #e3ecf1; border-radius: 0 0 18px 18px;">
 <span style="font-size: 14px; font-weight: 700; color: #0a2852;">{{ pr.totalLabel }}</span>
 <div style="display: flex; flex-direction: column; align-items: flex-end;">
 <span style="font-size: 20px; line-height: 1.3; font-weight: 800; color: #0d0e46;">{{ pr.totalVat }} s DPH</span>
 <span style="font-size: 14px; line-height: 1.5; color: #0a2852;">{{ pr.total }} bez DPH</span>
 </div>
-</div>
+</div></sc-if>
 </div>
 </sc-for>
 </sc-if>
@@ -1025,13 +1055,23 @@ class Component extends DCLogic {
       { label: 'Období', value: 'Zimní', options: ['Letní', 'Zimní', 'Celoroční'] },
     ];
     const vw = typeof window !== 'undefined' ? window.innerWidth : 1300;
+    const allFields = this._fields.map((fl, i) => ({ ...fl, value: (this.state.cfg && this.state.cfg[i]) || fl.value, onChange: e => { const v = e.target.value; this.setState(s => ({ cfg: { ...(s.cfg || {}), [i]: v } })); } }));
+    const ver = this.state.cfgVer || 'v1';
+    const showCommon = ver === 'v2' && this.state.twoSizes;
     return {
-      fields: this._fields.map((fl, i) => ({ ...fl, value: (this.state.cfg && this.state.cfg[i]) || fl.value, onChange: e => { const v = e.target.value; this.setState(s => ({ cfg: { ...(s.cfg || {}), [i]: v } })); } })),
+      fields: showCommon ? allFields.slice(1, 4) : allFields,
+      commonFields: [allFields[0], allFields[4]],
+      showCommon,
+      cfgVersions: [['v1', 'V1 – stávající'], ['v2', 'V2 – nový']].map(([k, l]) => ({ label: l, sel: ver === k, pick: () => this.setState({ cfgVer: k }), bg: ver === k ? '#f8ce43' : 'transparent', color: ver === k ? '#0b0620' : '#ffffff' })),
       btnPos: this.state.narrow ? 'static' : 'absolute',
       btnWidth: this.state.narrow && vw < 820 ? '100%' : '240px',
       btnMargin: this.state.narrow ? '12px 0 16px auto' : '0 0 22px auto',
       isBasic: !fav, isFav: fav,
       twoSizes: this.state.twoSizes,
+      showTotal: this.state.showTotal !== false,
+      toggleTotal: () => this.setState(s => ({ showTotal: s.showTotal === false })),
+      totalSwBg: this.state.showTotal !== false ? '#f8ce43' : '#546986',
+      totalKnob: this.state.showTotal !== false ? '23px' : '3px',
       oneSize: !this.state.twoSizes,
       ...this.buildResults(),
       doSearch: () => this.setState({ searched: true }),
